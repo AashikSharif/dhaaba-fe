@@ -148,7 +148,7 @@ export default function RecipeDisplay({ recipe, recipeLoading, imageLoading }) {
             clearRecipe();
             navigation.goBack();
           }}
-          className="ml-2 flex-1 items-center justify-center rounded-lg bg-blue-600 py-3">
+          className="ml-2 flex-1 items-center justify-center rounded-lg bg-fuchsia-600 py-3">
           <Text className="text-lg font-semibold text-white">Post</Text>
         </TouchableOpacity>
       </View>

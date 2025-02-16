@@ -1,15 +1,18 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Image } from 'expo-image';
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
 import Icon from 'react-native-vector-icons/Feather';
 import IconStar from 'react-native-vector-icons/MaterialCommunityIcons';
+import countries from 'world-countries';
+
+import gen from '../assets/gen.png';
 
 import RecipeDisplay from '~/components/RecipeDisplay';
 import { useRecipeStore } from '~/store/recipe.store';
 import { useUserStore } from '~/store/user.store';
 import api from '~/utils/api';
-
 export default function CreateScreen({ navigation }) {
   const queryClient = useQueryClient();
   const { user } = useUserStore();
@@ -30,17 +33,8 @@ export default function CreateScreen({ navigation }) {
   } = useRecipeStore();
 
   // Options Data
-  const mealOptions = ['Breakfast', 'Main Course', 'Lunch', 'Dinner', 'Snacks'];
-  const cuisineOptions = [
-    'Italian',
-    'Mexican',
-    'Indian',
-    'Chinese',
-    'French',
-    'Japanese',
-    'Mediterranean',
-    'Thai',
-  ];
+  const mealOptions = ['Soup', 'Appetizers', 'Main Course', 'Desserts'];
+
   const dietaryOptions = [
     'Vegan',
     'Vegetarian',
@@ -128,79 +122,98 @@ export default function CreateScreen({ navigation }) {
     navigation.navigate('country-select');
   };
 
-  console.log(isLoading, isLoadingImage);
-
   return (
     <View className="flex-1 bg-gray-900 px-6 pb-8 pt-12">
       {!isLoading && !isLoadingImage && !recipe && (
         <>
-          <Text className="mb-2 text-lg font-semibold text-white">Number of People</Text>
-          <View className="w-full flex-row items-center justify-evenly rounded-lg bg-gray-800 p-3">
-            <TouchableOpacity
-              onPress={() => setPeople(people - 1)}
-              className="rounded-full bg-gray-700 p-2">
-              <Icon name="minus" size={32} color="white" />
-            </TouchableOpacity>
-
-            <Text className="text-2xl font-bold text-white">{`${people} people`}</Text>
-
-            <TouchableOpacity
-              onPress={() => setPeople(people + 1)}
-              className="rounded-full bg-blue-600 p-2">
-              <Icon name="plus" size={32} color="white" />
-            </TouchableOpacity>
-          </View>
-
-          <View className="my-20">
-            <Text className="mb-2 mt-4 text-lg font-semibold text-white">Select Cuisine Types</Text>
-            <TouchableOpacity
-              onPress={countrySelect}
-              // disabled={isLoading}
-              className="w-full flex-row items-center justify-center rounded-lg bg-gray-800 py-3">
-              <Text className="ml-2 text-lg font-semibold text-white">Press to select</Text>
-            </TouchableOpacity>
-            {cuisine1 && cuisine2 && (
-              <Text className="text-md mb-2 mt-4 text-center font-semibold text-white">
-                {`You selected ${cuisine1} and ${cuisine2}`}
-              </Text>
+          <View className="">
+            <Text className="mb-2 mt-4 text-2xl font-semibold text-white">
+              Select Cuisine Types
+            </Text>
+            {cuisine1 && cuisine2 ? (
+              <View className="flex-col justify-evenly">
+                <TouchableOpacity onPress={countrySelect}>
+                  <Text className="mb-2 mt-4 text-center text-4xl font-semibold text-white">
+                    {`${countries.find((c) => c.name.common === cuisine1).flag} ${cuisine1}`}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={countrySelect}>
+                  <Text className="mb-2 mt-4 text-center text-4xl font-semibold text-white">
+                    {`${countries.find((c) => c.name.common === cuisine2).flag} ${cuisine2}`}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View className="flex-col justify-evenly">
+                <TouchableOpacity onPress={countrySelect}>
+                  <Text className="mb-2 mt-4 text-center text-4xl font-semibold text-white">
+                    Country 1
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={countrySelect}>
+                  <Text className="mb-2 mt-4 text-center text-4xl font-semibold text-white">
+                    Country 2
+                  </Text>
+                </TouchableOpacity>
+              </View>
             )}
           </View>
 
-          <Text className="mb-2 mt-4 text-lg font-semibold text-white">Select Meal Type</Text>
+          <Text className="mb-2 mt-4 text-2xl font-semibold text-white">Select Meal Type</Text>
           <FlatList
             data={mealOptions}
             keyExtractor={(item) => item}
-            numColumns={4}
+            numColumns={3}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => setMealType(item)}
                 className={`m-1 rounded-full px-4 py-2 ${
                   mealType === item ? 'bg-blue-500' : 'bg-gray-700'
                 }`}>
-                <Text className="text-white">{item}</Text>
+                <Text className="text-xl text-white">{item}</Text>
               </TouchableOpacity>
             )}
           />
 
-          <Text className="mb-2 mt-4 text-lg font-semibold text-white">Dietary Constraints</Text>
+          <Text className="mb-2 text-2xl font-semibold text-white">Dietary Constraints</Text>
           <FlatList
             data={dietaryOptions}
             keyExtractor={(item) => item}
-            numColumns={4}
+            numColumns={3}
             renderItem={({ item }) => (
               <TouchableOpacity
                 onPress={() => toggleDietary(item)}
                 className={`m-1 rounded-full px-4 py-2 ${
                   dietaryConstraints.includes(item) ? 'bg-blue-500' : 'bg-gray-700'
                 }`}>
-                <Text className="text-white">{item}</Text>
+                <Text className="text-xl text-white">{item}</Text>
               </TouchableOpacity>
             )}
           />
+
+          <View className="">
+            <Text className="mb-2 text-2xl font-semibold text-white">Number of People</Text>
+            <View className="w-full flex-row items-center justify-evenly rounded-lg p-3">
+              <TouchableOpacity
+                onPress={() => setPeople(people - 1)}
+                className="rounded-full bg-gray-700 p-2">
+                <Icon name="minus" size={32} color="white" />
+              </TouchableOpacity>
+
+              <Text className="text-2xl font-bold text-white">{`${people} people`}</Text>
+
+              <TouchableOpacity
+                onPress={() => setPeople(people + 1)}
+                className="rounded-full bg-blue-500 p-2">
+                <Icon name="plus" size={32} color="white" />
+              </TouchableOpacity>
+            </View>
+          </View>
+
           <TouchableOpacity
             onPress={generatePrompt}
             disabled={isLoading}
-            className="mt-6 w-full flex-row items-center justify-center rounded-lg bg-blue-600 py-3">
+            className="my-6 w-full flex-row items-center justify-center rounded-lg bg-fuchsia-600 py-3">
             <IconStar name="star-four-points" size={20} color="white" />
             <Text className="ml-2 text-lg font-semibold text-white">
               {isLoading ? 'Creating...' : 'Create Fusion'}

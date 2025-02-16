@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from 'react';
 
-import { CreateIcon, FeedIcon, ProfileIcon } from '~/components/TabItems'; // Using Feather icons
+import { CreateIcon, FeedIcon, ProfileIcon, tabBarBackground } from '~/components/TabItems'; // Using Feather icons
 import { CreateStack } from '~/navigation/create/CreateStack';
 import { FeedStack } from '~/navigation/feed/FeedStack';
 import { ProfileStack } from '~/navigation/profile/ProfileStack';
@@ -15,7 +15,10 @@ export default function AppBottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: '#111827', borderTopColor: '#111827' },
+        tabBarStyle: {
+          backgroundColor: '#111827',
+          borderTopColor: '#111827',
+        },
         tabBarActiveTintColor: '#60A5FA',
         tabBarInactiveTintColor: '#9CA3AF',
         headerShown: false,
@@ -35,7 +38,6 @@ export default function AppBottomTabs() {
         options={{
           tabBarIcon: CreateIcon,
           tabBarShowLabel: false,
-          // tabBarLabel: null,
         }}
       />
 

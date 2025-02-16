@@ -13,7 +13,6 @@ import {
 
 import api from '~/utils/api';
 
-// Function to parse recipe text into structured sections
 function parseRecipeSections(recipeText) {
   const extractSection = (text, sectionName) => {
     const regex = new RegExp(`\\[${sectionName}\\]([\\s\\S]*?)(?=\\[|$)`);
@@ -68,20 +67,16 @@ export default function PostView({ route }) {
         <View className="items-center justify-center">
           <Image source={{ uri: recipe.imageUrl }} className="h-96 w-full rounded-2xl" />
         </View>
-        {/* Title */}
         <Text className="my-4 text-2xl font-bold text-white">{parsedRecipe.title}</Text>
 
-        {/* Description */}
         {parsedRecipe.description && (
           <Text className="mb-4 text-lg text-gray-300">{parsedRecipe.description}</Text>
         )}
 
-        {/* Recipe Info */}
         {parsedRecipe.info && (
           <Text className="mb-4 italic text-gray-400">{parsedRecipe.info}</Text>
         )}
 
-        {/* Ingredients Section */}
         {parsedRecipe.ingredients.length > 0 && (
           <View className="mb-4">
             <Text className="mb-2 text-xl font-semibold text-blue-400">Ingredients:</Text>

@@ -12,7 +12,8 @@ export default function CountrySelectionScreen({ navigation }) {
       key={country.cca2}
       onPress={() => setSelectedCountry(country.name.common)}
       className={`mb-2 rounded-lg px-2 py-4 ${selectedCountry === country.name.common ? 'bg-gray-800' : ''} `}>
-      <Text className={`text-white text-${position} text-2xl`}>{country.name.common}</Text>
+      <Text
+        className={`text-white text-${position} text-2xl`}>{`${country.flag} ${country.name.common}`}</Text>
     </TouchableOpacity>
   );
 

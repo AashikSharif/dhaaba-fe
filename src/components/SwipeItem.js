@@ -73,7 +73,6 @@ export default function SwipeItem({ img, item }) {
         style={{
           width,
           height,
-          // zIndex: 1,
         }}
         source={img}
         blurRadius={80}
@@ -82,7 +81,6 @@ export default function SwipeItem({ img, item }) {
 
       <LinearGradient
         colors={['rgba(0, 0, 0, 0.8)', 'rgba(0, 0, 0, 0)']}
-        // colors={['rgba(255, 255, 255, 0.8)', 'rgba(255, 255, 255, 0)']}
         start={{ x: 0, y: 1 }}
         end={{ x: 0, y: 0 }}
         style={styles.gradient}
@@ -106,8 +104,8 @@ export default function SwipeItem({ img, item }) {
           }}>
           <Image
             style={{
-              width: 50,
-              height: 50,
+              width: 65,
+              height: 65,
               borderRadius: 50,
             }}
             source={
@@ -120,13 +118,16 @@ export default function SwipeItem({ img, item }) {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              // alignItems: 'center',
               justifyContent: 'space-evenly',
               textAlign: 'left',
               gap: 2,
             }}>
-            <Text style={{ color: 'white', fontWeight: 600 }}>{`@${item?.user?.username}`}</Text>
-            {/*<Text style={{ color: 'white', fontWeight: 200 }}>Graduate Student</Text>*/}
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 600,
+                fontSize: 20,
+              }}>{`@${item?.user?.username}`}</Text>
           </View>
         </View>
       </View>
@@ -141,20 +142,17 @@ export default function SwipeItem({ img, item }) {
           alignItems: 'center',
           gap: 8,
         }}>
-        {/* Recipe Image */}
         <ReactImage
           source={{ uri: item.imageUrl }}
           className="shadow-4xl z-40 h-96 w-full rounded-2xl"
         />
 
-        {/* Recipe Title */}
         <Text
           className="text-center"
           style={{ color: 'white', fontSize: 24, fontWeight: 500, marginBottom: 8 }}>
           {recipe.title}
         </Text>
 
-        {/* Recipe Description */}
         <Text
           numberOfLines={5}
           className="text-left"
@@ -183,7 +181,9 @@ export default function SwipeItem({ img, item }) {
 
           <TouchableOpacity className="flex-row items-center">
             <IconX name="message-circle" size={24} color="white" />
-            <Text className="ml-2 text-lg text-white">{recipe.comments || 0} Comments</Text>
+            <Text className="ml-2 text-lg text-white">
+              {recipe.comments || Math.floor(Math.random() * (50 - 5 + 1)) + 5} Comments
+            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity className="flex-row items-center">
