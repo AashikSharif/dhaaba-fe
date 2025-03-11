@@ -29,14 +29,19 @@ Ensure you have the following installed on your system:
 
 1. Clone this repository:  
    ```sh
-   git clone [https://githubhttps://github.com/peersahab/dhaaba-fe/](https://github.com/peersahab/dhaaba-fe)
+   git clone https://github.com/peersahab/dhaaba-fe
    cd dhaaba-fe
 
+2. Setup packages
    ```sh
-   npm install && npx expo start
+   npm install
+
+3. Run the application
+   ```sh
+   npx expo start
 
 ## Related Repositories
 
 - **Backend**: [dhaaba-fusion-be](https://github.com/AashikSharif/dhaaba-fusion-be/)
 - **Frontend (Mobile App)**: [dhaaba-fe](https://github.com/peersahab/dhaaba-fe/)
-- **Web App**: [food-app](https://github.com/AashikSharif/food-app/)
+- **Web App**: [food-app](https://github.com/simarjeetss/food-app)
